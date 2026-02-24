@@ -105,7 +105,7 @@ export function ContactList({ contacts, onRefresh }: ContactListProps) {
               {filtered.map((c) => (
                 <TableRow key={c.id} className="animate-fade-in">
                   <TableCell className="whitespace-nowrap text-sm font-mono">
-                    {new Date(c.contactDate).toLocaleDateString("pt-BR")}
+                    {new Date(c.contactDate + "T00:00:00").toLocaleDateString("pt-BR")}
                   </TableCell>
                   <TableCell className="font-medium">{c.enterprise}</TableCell>
                   <TableCell>{c.clientName}</TableCell>

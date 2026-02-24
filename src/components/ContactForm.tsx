@@ -18,9 +18,13 @@ export function ContactForm({ onSaved }: ContactFormProps) {
   const [clientName, setClientName] = useState("");
   const [unit, setUnit] = useState("");
   const [contactMethod, setContactMethod] = useState<ContactMethod>("telefone");
+  const [contactInfo, setContactInfo] = useState("");
   const [contactDate, setContactDate] = useState(new Date().toISOString().split("T")[0]);
   const [observations, setObservations] = useState("");
   const [status, setStatus] = useState<ClientStatus>("em_andamento");
+
+  const showPhoneField = contactMethod === "telefone" || contactMethod === "whatsapp";
+  const showEmailField = contactMethod === "email";
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -28,11 +32,12 @@ export function ContactForm({ onSaved }: ContactFormProps) {
       toast.error("Preencha os campos obrigatórios.");
       return;
     }
-    saveContact({ enterprise: enterprise.trim(), clientName: clientName.trim(), unit: unit.trim(), contactMethod, contactDate, observations: observations.trim(), status });
+    saveContact({ enterprise: enterprise.trim(), clientName: clientName.trim(), unit: unit.trim(), contactMethod, contactInfo: contactInfo.trim(), contactDate, observations: observations.trim(), status });
     toast.success("Contato registrado com sucesso!");
     setEnterprise("");
     setClientName("");
     setUnit("");
+    setContactInfo("");
     setObservations("");
     setContactMethod("telefone");
     setStatus("em_andamento");
@@ -66,6 +71,20 @@ export function ContactForm({ onSaved }: ContactFormProps) {
             </SelectContent>
           </Select>
         </div>
+        {(showPhoneField || showEmailField) && (
+          <div className="space-y-1.5">
+            <Label htmlFor="contactInfo">
+              {showPhoneField ? "Número de Telefone" : "E-mail"}
+            </Label>
+            <Input
+              id="contactInfo"
+              type={showEmailField ? "email" : "tel"}
+              value={contactInfo}
+              onChange={(e) => setContactInfo(e.target.value)}
+              placeholder={showPhoneField ? "Ex: (11) 99999-9999" : "Ex: cliente@email.com"}
+            />
+          </div>
+        )}
         <div className="space-y-1.5">
           <Label htmlFor="contactDate">Data do Contato</Label>
           <Input id="contactDate" type="date" value={contactDate} onChange={(e) => setContactDate(e.target.value)} />

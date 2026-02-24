@@ -8,6 +8,7 @@ export interface ContactRecord {
   clientName: string;
   unit: string;
   contactMethod: ContactMethod;
+  contactInfo: string;
   contactDate: string;
   observations: string;
   status: ClientStatus;

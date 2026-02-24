@@ -95,7 +95,10 @@ export function ContactList({ contacts, onRefresh }: ContactListProps) {
                   <TableCell className="font-medium">{c.enterprise}</TableCell>
                   <TableCell>{c.clientName}</TableCell>
                   <TableCell>{c.unit}</TableCell>
-                  <TableCell className="text-sm">{CONTACT_METHOD_LABELS[c.contactMethod]}</TableCell>
+                  <TableCell className="text-sm">
+                    <div>{CONTACT_METHOD_LABELS[c.contactMethod]}</div>
+                    {c.contactInfo && <div className="text-xs text-muted-foreground">{c.contactInfo}</div>}
+                  </TableCell>
                   <TableCell>
                     <Select value={c.status} onValueChange={(v) => handleStatusChange(c.id, v as ClientStatus)}>
                       <SelectTrigger className="h-8 w-36 border-0 p-0 shadow-none">

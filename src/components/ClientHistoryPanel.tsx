@@ -35,6 +35,7 @@ export function ClientHistoryPanel({ clientName }: ClientHistoryPanelProps) {
                 <span className="flex items-center gap-1">
                   <Phone className="h-3.5 w-3.5" />
                   {CONTACT_METHOD_LABELS[record.contactMethod]}
+                  {record.contactInfo && <span className="ml-1">({record.contactInfo})</span>}
                 </span>
                 <span>{record.enterprise} — Un. {record.unit}</span>
               </div>

@@ -58,15 +58,15 @@ export function ContactForm({ onSaved }: ContactFormProps) {
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
         <div className="space-y-1.5">
           <Label htmlFor="enterprise">Empreendimento *</Label>
-          <Input id="enterprise" value={enterprise} onChange={(e) => setEnterprise(e.target.value)} placeholder="Ex: Bresser" />
+          <Input id="enterprise" value={enterprise} onChange={(e) => setEnterprise(e.target.value)} placeholder="Ex: Bresser" autoComplete="off" />
         </div>
         <div className="space-y-1.5">
           <Label htmlFor="clientName">Nome do Cliente *</Label>
-          <Input id="clientName" value={clientName} onChange={(e) => setClientName(e.target.value)} placeholder="Ex: Edson Santos" />
+          <Input id="clientName" value={clientName} onChange={(e) => setClientName(e.target.value)} placeholder="Ex: Edson Santos" autoComplete="off" />
         </div>
         <div className="space-y-1.5">
           <Label htmlFor="unit">Unidade *</Label>
-          <Input id="unit" value={unit} onChange={(e) => setUnit(e.target.value)} placeholder="Ex: 2308" />
+          <Input id="unit" value={unit} onChange={(e) => setUnit(e.target.value)} placeholder="Ex: 2308" autoComplete="off" />
         </div>
         <div className="space-y-1.5">
           <Label>Forma de Contato</Label>
@@ -90,12 +90,13 @@ export function ContactForm({ onSaved }: ContactFormProps) {
               value={contactInfo}
               onChange={(e) => setContactInfo(e.target.value)}
               placeholder={showPhoneField ? "Ex: (11) 99999-9999" : "Ex: cliente@email.com"}
+              autoComplete="off"
             />
           </div>
         )}
         <div className="space-y-1.5">
           <Label htmlFor="contactDate">Data do Contato</Label>
-          <Input id="contactDate" type="date" value={contactDate} onChange={(e) => setContactDate(e.target.value)} />
+          <Input id="contactDate" type="date" value={contactDate} onChange={(e) => setContactDate(e.target.value)} autoComplete="off" />
         </div>
         <div className="space-y-1.5">
           <Label>Status</Label>

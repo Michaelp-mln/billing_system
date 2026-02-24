@@ -6,8 +6,9 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
 import { toast } from "sonner";
-import { Trash2, History, Search } from "lucide-react";
+import { Trash2, History, Search, Pencil, Check, X } from "lucide-react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { ClientHistoryPanel } from "@/components/ClientHistoryPanel";
 
@@ -19,6 +20,8 @@ interface ContactListProps {
 export function ContactList({ contacts, onRefresh }: ContactListProps) {
   const [search, setSearch] = useState("");
   const [filterStatus, setFilterStatus] = useState<string>("all");
+  const [editingId, setEditingId] = useState<string | null>(null);
+  const [editingObs, setEditingObs] = useState("");
 
   const filtered = contacts.filter((c) => {
     const matchesSearch =
@@ -38,6 +41,18 @@ export function ContactList({ contacts, onRefresh }: ContactListProps) {
   const handleDelete = (id: string) => {
     deleteContact(id);
     toast.success("Contato removido.");
+    onRefresh();
+  };
+
+  const startEditObs = (c: ContactRecord) => {
+    setEditingId(c.id);
+    setEditingObs(c.observations);
+  };
+
+  const saveObs = (id: string) => {
+    updateContact(id, { observations: editingObs.trim() });
+    setEditingId(null);
+    toast.success("Observação atualizada!");
     onRefresh();
   };
 
@@ -111,8 +126,29 @@ export function ContactList({ contacts, onRefresh }: ContactListProps) {
                       </SelectContent>
                     </Select>
                   </TableCell>
-                  <TableCell className="max-w-[200px] truncate text-sm text-muted-foreground" title={c.observations}>
-                    {c.observations || "—"}
+                  <TableCell className="max-w-[250px]">
+                    {editingId === c.id ? (
+                      <div className="flex items-start gap-1">
+                        <Textarea
+                          value={editingObs}
+                          onChange={(e) => setEditingObs(e.target.value)}
+                          rows={2}
+                          className="text-sm min-w-[150px]"
+                          autoFocus
+                        />
+                        <Button variant="ghost" size="icon" className="h-7 w-7 shrink-0 text-primary" onClick={() => saveObs(c.id)}>
+                          <Check className="h-3.5 w-3.5" />
+                        </Button>
+                        <Button variant="ghost" size="icon" className="h-7 w-7 shrink-0" onClick={() => setEditingId(null)}>
+                          <X className="h-3.5 w-3.5" />
+                        </Button>
+                      </div>
+                    ) : (
+                      <div className="flex items-center gap-1 group cursor-pointer" onClick={() => startEditObs(c)}>
+                        <span className="truncate text-sm text-muted-foreground">{c.observations || "—"}</span>
+                        <Pencil className="h-3 w-3 text-muted-foreground opacity-0 group-hover:opacity-100 shrink-0 transition-opacity" />
+                      </div>
+                    )}
                   </TableCell>
                   <TableCell>
                     <div className="flex gap-1">

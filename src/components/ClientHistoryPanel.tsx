@@ -27,7 +27,7 @@ export function ClientHistoryPanel({ clientName }: ClientHistoryPanelProps) {
               <div className="flex items-center justify-between flex-wrap gap-2">
                 <div className="flex items-center gap-2 text-sm">
                   <CalendarDays className="h-3.5 w-3.5 text-muted-foreground" />
-                  <span className="font-mono">{new Date(record.contactDate).toLocaleDateString("pt-BR")}</span>
+                  <span className="font-mono">{new Date(record.contactDate + "T00:00:00").toLocaleDateString("pt-BR")}</span>
                 </div>
                 <StatusBadge status={record.status} />
               </div>

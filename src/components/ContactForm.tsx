@@ -13,13 +13,21 @@ interface ContactFormProps {
   onSaved: () => void;
 }
 
+const getTodayLocalDate = () => {
+  const now = new Date();
+  const year = now.getFullYear();
+  const month = String(now.getMonth() + 1).padStart(2, "0");
+  const day = String(now.getDate()).padStart(2, "0");
+  return `${year}-${month}-${day}`;
+};
+
 export function ContactForm({ onSaved }: ContactFormProps) {
   const [enterprise, setEnterprise] = useState("");
   const [clientName, setClientName] = useState("");
   const [unit, setUnit] = useState("");
   const [contactMethod, setContactMethod] = useState<ContactMethod>("telefone");
   const [contactInfo, setContactInfo] = useState("");
-  const [contactDate, setContactDate] = useState(new Date().toISOString().split("T")[0]);
+  const [contactDate, setContactDate] = useState(getTodayLocalDate());
   const [observations, setObservations] = useState("");
   const [status, setStatus] = useState<ClientStatus>("em_andamento");
 
@@ -41,7 +49,7 @@ export function ContactForm({ onSaved }: ContactFormProps) {
     setObservations("");
     setContactMethod("telefone");
     setStatus("em_andamento");
-    setContactDate(new Date().toISOString().split("T")[0]);
+    setContactDate(getTodayLocalDate());
     onSaved();
   };
 
